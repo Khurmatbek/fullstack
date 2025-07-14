@@ -1,6 +1,6 @@
 "use client"
 
-import { userCReateFunction, userGetFunction } from "@/functions/users.get";
+import { userCReateFunction } from "@/functions/users.get";
 import { FormEvent, useRef, useState } from "react";
 
 interface FormProps {
