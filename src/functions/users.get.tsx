@@ -14,7 +14,7 @@ export const userGetFunction = async () => {
 
 export const userCReateFunction = async (data: { name: string, email: string, password: string }) => {
     try {
-        const response = await axios.post("api/users", {
+        const response =await axios.post("api/users", {
             name: data.name,
             email: data.email,
             password: data.password

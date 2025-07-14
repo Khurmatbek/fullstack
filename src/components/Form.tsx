@@ -1,8 +1,13 @@
+"use client"
 
 import { userCReateFunction, userGetFunction } from "@/functions/users.get";
 import { FormEvent, useRef, useState } from "react";
 
-export default function Form() {
+interface FormProps {
+    onsuccess: () => void;
+}
+
+export default function Form({ onsuccess }: FormProps) {
     const nameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -23,7 +28,7 @@ export default function Form() {
 
         if (userdata.name && userdata.email && userdata.password) {
             userCReateFunction(userdata);
-            userGetFunction();
+            onsuccess();
         }
         setLoading(false);
     };

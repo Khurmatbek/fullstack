@@ -16,8 +16,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className='flex justify-center gap-[50px]'>
-      <Form />
+    <div className='flex justify-center gap-[50px]' suppressHydrationWarning={true}>
+      <Form onsuccess={userGetFunction} />
       <ul>
         {users.map((user: any) => (
           <li key={user.id}>{user.name} — {user.email}</li>

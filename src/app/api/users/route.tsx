@@ -1,8 +1,9 @@
 
-import { PrismaClient } from "@/generated/prisma";
+
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
+
 
 export async function GET() {
     try {
@@ -18,16 +19,29 @@ export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         const { name, email, password } = body;
+
+        const existingUser = await prisma.user.findUnique({
+            where: { email }
+        });
+
+        if (existingUser) {
+            return NextResponse.json(
+                { error: "Bunday email bilan foydalanuvchi mavjud." },
+                { status: 400 }
+            );
+        }
+
         const user = await prisma.user.create({
             data: {
                 name,
                 email,
-                password
-            }
-        })
-        return NextResponse.json(user);
+                password,
+            },
+        });
 
+        return NextResponse.json(user);
     } catch (error) {
         console.error("Error creating user:", error);
+        return NextResponse.json({ error: "Server xatosi" }, { status: 500 });
     }
 }
